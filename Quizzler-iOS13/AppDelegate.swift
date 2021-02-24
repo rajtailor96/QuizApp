@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  Quizzler-iOS13
 //
-//  Created by Angela Yu on 12/07/2019.
-//  Copyright © 2019 The App Brewery. All rights reserved.
+//  Created by Raj Tailor on 2/23/2021.
+//  Copyright © 2019 Raj Tailor. All rights reserved.
 //
 
 import UIKit
