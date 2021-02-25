@@ -1,19 +1,17 @@
 //
-//  ViewController.swift
+//  QuizBrain.swift
 //  Quizzler-iOS13
 //
-//  Created by Raj Tailor on 2/23/2021.
-//  Copyright © 2019 Raj Tailor. All rights reserved.
+//  Created by Raj Tailor on 2/24/21.
+//  Copyright © 2021 The App Brewery. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class ViewController: UIViewController {
-    @IBOutlet weak var questionLabel: UILabel!
-    @IBOutlet weak var progressBar: UIProgressView!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
+struct QuizBrain{
     
+    var questionNumber = 0
+    var score = 0
     
     let quiz = [
         Question(q: "Pigs have sweat glands", a: "False"),
@@ -31,45 +29,36 @@ class ViewController: UIViewController {
         Question(q: "Soy protien is just as effective as whey or casein protiens in muscle growth.", a: "False"),
         Question(q: "Japan has square watermelons.", a: "True"),
         Question(q: "Pinocchio was the first animated full-color Walt Disney feature film", a: "False"),
-        Question(q: "There are 100 dimples on a golf ball.", a: "False")
+        Question(q: "There are 100 dimples on a golf ball.", a: "False"),
+        Question(q: "Maria of Super Maria Bros. fame was once a carpenter.", a: "True")
     ]
     
-    
-    
-    
-    var questionNumber = 0
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        updateUI()
-        // Do any additional setup after loading the view.
+    mutating func checkAnswer(_ userAnswer: String) -> Bool{
+        if userAnswer == quiz[questionNumber].answer{
+            score+=1
+            return true
+        } else {
+            return false
+        }
     }
     
+    func getQuestionText() -> String {
+        return quiz[questionNumber].test
+    }
+    func getProgress() -> Float {
+        return Float(questionNumber)/Float(quiz.count)
+    }
+    func getScore() -> String {
+        return "\(score)/\(quiz.count)"
+    }
     
-
-    @IBAction func answerButtonPressed(_ sender: UIButton) {
-        
-        let userAnswer = sender.currentTitle!
-        let actualAnswer = quiz[questionNumber].answer
-        
-        if userAnswer == actualAnswer {
-            print("Right")
-        } else {
-            print("Wrong")
-        }
-        
-        
+    mutating func nextQuestion(){
         if questionNumber < quiz.count - 1{
             questionNumber+=1
         } else {
             questionNumber = 0
+            score = 0
         }
-        updateUI()
-    
     }
     
-    func updateUI() {
-        questionLabel.text = quiz[questionNumber].test
-    }
 }
-
