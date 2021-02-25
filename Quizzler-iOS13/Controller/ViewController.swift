@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     var timer = Timer()
@@ -31,8 +32,10 @@ class ViewController: UIViewController {
         
         if quizBrain.checkAnswer(sender.currentTitle!) {
             sender.backgroundColor = UIColor.green
+            MP3.background.startMusic(sound: "correct")
         } else {
             sender.backgroundColor = UIColor.red
+            MP3.background.startMusic(sound: "wrong")
         }
         
         quizBrain.nextQuestion()
@@ -52,3 +55,25 @@ class ViewController: UIViewController {
     }
 }
 
+class MP3{
+    static let background = MP3()
+    var audioPlayer: AVAudioPlayer?
+    
+    func startMusic(sound: String){
+        if let bundle = Bundle.main.path(forResource: sound, ofType: "mp3"){
+            let backgroundMusic = NSURL(fileURLWithPath: bundle)
+            do{
+                audioPlayer = try AVAudioPlayer(contentsOf: backgroundMusic as URL)
+                guard let audioPlayer = audioPlayer else {return}
+                audioPlayer.numberOfLoops = 0
+                audioPlayer.prepareToPlay()
+                audioPlayer.play()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    func stopMusic() {
+        audioPlayer?.stop()
+    }
+}
